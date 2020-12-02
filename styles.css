@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+  /* border: 1px solid black; */
+  /* outline: 1px solid black; */
+}
+
+body {
+  background-color: #1d9a6c;
+}
+#headings {
+  display: flex;
+  flex-direction: column;
+  margin: 40px auto;
+  padding: 20px auto;
+  text-align: center;
+}
+
+span {
+  border: 5px solid #56b870;
+  padding: 20px;
+  margin: 10px;
+  font-size: 80px;
+  color: white;
+}
+
+#startbtn {
+  background-color: #bfe1b0;
+  text-align: center;
+  padding: 15px 50px;
+  margin: 70px auto 100px auto;
+  font-size: 25px;
+}
+
+.gamecontainerone {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 10px auto;
+  width: 60%;
+  row-gap: 135px;
+  column-gap: -50px;
+  justify-content: center;
+}
+
+h1 {
+  display: inline;
+  font-size: 50px;
+  text-align: center;
+}
+
+.dirtimage {
+  margin: -40px 50px;
+  width: 300px;
+  background-image: url(./colour-bg.png);
+  background-size: 100% 200px;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  padding-bottom: 130px;
+  position: relative;
+  z-index: 1;
+}
+
+.moleimage {
+  width: 150px;
+  margin: 0 auto -300px;
+  transform: translateY(130px);
+  /* z-index: -1; */
+}
+
+.moleanimation {
+  animation-name: popout;
+  animation-duration: 0.5s;
+}
+
+@keyframes popout {
+  0% {
+    transform: translateY(120px);
+  }
+  25% {
+    transform: translateY(60px);
+  }
+  50% {
+    transform: translateY(-70px);
+  }
+  75% {
+    transform: translateY(60px);
+  }
+  100% {
+    transform: translateY(120px);
+  }
+}
