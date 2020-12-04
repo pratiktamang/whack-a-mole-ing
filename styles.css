@@ -4,6 +4,11 @@
   /* outline: 1px solid black; */
 }
 
+.customMouse {
+  top: -100px;
+  left: 40px;
+}
+
 body {
   background-color: #1d9a6c;
 }
@@ -88,3 +93,20 @@ h1 {
     transform: translateY(120px);
   }
 }
+
+#hammerpic {
+  height: 300px;
+  width: 300px;
+  position: absolute;
+  /* transform: translate(-35px, -110px); */
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hidehammer {
+  display: none;
+}
+
+/*
+add "top" and "left" to #hammerpic. javascript to do that. 
+*/

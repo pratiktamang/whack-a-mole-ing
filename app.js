@@ -1,71 +1,15 @@
-/*
-
-https://codepen.io/AlexsandroSA/full/ZXGZag 
-
-
-Game rules
-1/ the user clicks on "Start!" button to start the game.
-2/ 6 positions where the mole can RANDOMLY appear
-    // at random speeds
-3/ the user can click on the mole with the mouse.
-4/ sucessful click adds the total to a global counter
-*/
-
-// javascript to build a table for us
-// javascript to build the html element
-
-// Can I use JS to animate add CSS to images?
-
-// how do you animat
-
-// event listener on the button
-// event listener on click on the images.
-
-// let score = 0;
-// let startButton = document.querySelector("#startbtn");
-// let moles = document.querySelectorAll("#gamefirstrow > img.moleimage");
-// let gameInterval;
-// startButton.addEventListener("click", popout);
-
-// function popout() {
-//   console.log("click");
-//   let num = 10;
-//   while (num > 1) {
-//     console.log(num);
-//     gameInterval = setInterval(() => {
-//       for (let i = 0; i < moles.length; i++) {
-//         if (!moles.item(i).classList.contains("moleanimation")) {
-//           console.log("ifstate");
-//           moles.item(i).classList.add("moleanimation");
-//           moles.item(i).style.animationDuration = Math.random() * 1 + "s";
-//         } else {
-//           console.log("else");
-//           moles.item(i).classList.remove("moleanimation");
-//           moles.item(i).style.animationDuration = Math.random() * 2 + "s";
-//         }
-//       }
-//     }, 1000);
-//   }
-//   num--;
-//   console.log(num);
-// }
-
 let score = 0;
 let startButton = document.querySelector("#startbtn");
 let moles = document.querySelectorAll("#game > img.moleimage");
 let gameInterval;
-startButton.addEventListener("click", popout);
+startButton.addEventListener("click", startGame);
 // moles contain using event delegation to get all of them instead of looping and adding event listeners to all
 let moleCTR = document.querySelector("#game");
 let scoreCounter = document.getElementById("counter");
-
-// function operationMole() {
-//   for (let i = 0; i < moles.length; i++) {
-//     moles[i].addEventListener("click", function countscore() {
-//       score++;
-//     });
-//   }
-// }
+let customCursor = document.querySelector("#hammerpic");
+let countdowntime = document.getElementById("cdown");
+let startingTime = 3;
+let timer = startingTime;
 
 moleCTR.addEventListener("click", function (e) {
   console.log("moleyes?");
@@ -74,11 +18,17 @@ moleCTR.addEventListener("click", function (e) {
     scoreCounter.innerHTML = score;
   }
 });
+console.log("hammer show check");
+
+function startGame() {
+  customCursor.classList.toggle("hidehammer");
+  countdown();
+}
 
 function popout() {
+  // customCursor.classList.toggle("hidehammer");
   scoreCounter.innerHTML = 0;
   score = 0;
-  console.log("click");
   if (gameInterval) {
     console.log(
       "The game is already running",
@@ -104,21 +54,42 @@ function popout() {
     setTimeout(function () {
       clearInterval(gameInterval);
       gameInterval = 0;
+      customCursor.classList.toggle("hidehammer");
     }, 10000);
+    // customCursor.classList.toggle("hidehammer");
   }
 }
-//New feature adds and bug fixes
-// add a game over message after the 10 seconds
-// add a high score log in localstorage
-//https://blog.logrocket.com/the-complete-guide-to-using-localstorage-in-javascript-apps-ba44edb53a36/
-// limit the scores...
-// limit jason from being able to use the console. limit it just to mouse clicks
-// responsiveness to larger screens
 
-// I need a way for this to stop popping out after 10 seconds
-// disble the second start click until the 10 seconds is.. Done
+function toggleHammer() {}
 
-// setTimeout(function () {
-//   clearInterval(gameInterval);
-//   gameInterval = 0;
-// }, 1000);
+// Node.addEventListener(event_name, handler_function)
+
+document.body.addEventListener("mousemove", function (event) {
+  myFunction(event);
+});
+
+function myFunction(e) {
+  let x = e.clientX;
+  let y = e.clientY;
+  // var coor = "Coordinates: (" + x + "," + y + ")";
+  customCursor.style["top"] = y - 110 + "px";
+  customCursor.style["left"] = x - 35 + "px";
+  // customCursor.style["trasnform"] = "translate" + x-35
+}
+
+function countdown() {
+  let times = setInterval(() => {
+    if (timer > 0) {
+      console.log(timer);
+      countdowntime.innerHTML = timer;
+      timer--;
+    }
+  }, 1000);
+  setTimeout(function () {
+    // countdowntime.innerHTML = timer;
+    clearInterval(times);
+    timer = startingTime;
+    countdowntime.innerHTML = "Go!";
+    popout();
+  }, 4000);
+}
