@@ -107,6 +107,13 @@ function popout() {
     }, 10000);
   }
 }
+//New feature adds and bug fixes
+// add a game over message after the 10 seconds
+// add a high score log in localstorage
+//https://blog.logrocket.com/the-complete-guide-to-using-localstorage-in-javascript-apps-ba44edb53a36/
+// limit the scores...
+// limit jason from being able to use the console. limit it just to mouse clicks
+// responsiveness to larger screens
 
 // I need a way for this to stop popping out after 10 seconds
 // disble the second start click until the 10 seconds is.. Done
