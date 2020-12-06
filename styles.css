@@ -2,6 +2,7 @@
   box-sizing: border-box;
   /* border: 1px solid black; */
   /* outline: 1px solid black; */
+  user-select: none;
 }
 
 .customMouse {
@@ -107,6 +108,20 @@ h1 {
   display: none;
 }
 
-/*
-add "top" and "left" to #hammerpic. javascript to do that. 
-*/
+.flix {
+  transform: rotate(-45deg);
+}
+
+.gothit {
+  background-color: red;
+  animation: rotation 0.5s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
