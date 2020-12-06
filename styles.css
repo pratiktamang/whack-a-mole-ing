@@ -104,7 +104,7 @@ h1 {
   pointer-events: none;
 }
 
-.hidehammer {
+.hideelement {
   display: none;
 }
 
@@ -124,4 +124,8 @@ h1 {
   to {
     transform: rotate(359deg);
   }
+}
+
+#localstorageinput {
+  margin: 0 auot;
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css"></link>
@@ -13,7 +14,13 @@
             <span id ="counter">0</span>
         </div>
         <div>
+            <p id="round">Round</p>
             <button id="startbtn">Start!</button>
+        <div>
+        <div id="localstorageinput">
+            <p class="hideelement" >Congrats! You're Invite To The Special Club. Enter You Name Here</p>
+            <input id="nameinput" type="text" class="hideelement" placeholder="Enter your name?">
+            <button id="submitbtn" class="hideelement">Submit!</button>
         </div>
         <h2 id="cdown"></h2>
     </section>
@@ -31,8 +38,10 @@
             <img class="dirtimage" src="./dirt.svg">
             <img class="dirtimage" src="./dirt.svg">
     </section>
-    <img id="hammerpic" class="hidehammer" src="./hammer.png">
+    <img id="hammerpic" class="hideelement" src="./hammer.png">
     <audio id="gothitaudio"><source src="./gothitsound.ogg" type="audio/ogg"></audio>
+    <audio id="countdownaudio"><source src="./countdown.ogg" type="audio/ogg"></audio>
 <script src="./app.js"></script>
 </body>
 </html>
+
