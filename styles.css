@@ -139,3 +139,12 @@ h1 {
 #HallOfFame {
   text-align: center;
 }
+
+.donotdrag {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

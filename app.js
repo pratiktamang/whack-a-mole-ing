@@ -1,8 +1,7 @@
 // (() => {
 // makes the functions, variables inaccessible in the console.
 let totalscore = 0;
-let startRoundScore = 0;
-let playerRoundScore = 1;
+var playerRoundScore = 0; // why 1?
 let startButton = document.querySelector("#startbtn");
 let moles = document.querySelectorAll("#game > img.moleimage");
 let gameInterval;
@@ -12,13 +11,19 @@ let countdowntime = document.getElementById("cdown");
 let startingTime = 3;
 let roundhtml = document.getElementById("round");
 let timer = startingTime;
-let round = 1;
 let speed = 5;
-let playername = "";
 let nameinput = document.getElementById("nameinput");
 let submitbtn = document.getElementById("submitbtn");
 let tableRows = document.getElementById("tablerows");
 let hallOfHameSection = document.getElementById("HallOfFame");
+let countDownVolume = document.getElementById("countdownaudio");
+
+function quarterVolume() {
+  countDownVolume.volume = 0.1;
+  document.getElementById("gothitaudio").volume = 0.1;
+}
+
+quarterVolume();
 
 if (localStorage.getItem("names") === null) {
   localStorage.setItem("names", JSON.stringify([])); // turns it into string
@@ -31,14 +36,11 @@ function startGame() {
   roundhtml.innerHTML = "Round:" + round;
   customCursor.classList.toggle("hideelement");
   // hallOfHameSection.classList.toggle("hideelement");
-  playerRoundScore = 0;
   countdown();
 }
 
 function popout() {
-  console.log("startinground: ", speed);
   molespeed = speed;
-  console.log("mole speed: ", molespeed);
   if (gameInterval) {
     // "The game is already running",gameInterval," is the id of the setInterval"
     // `run clearInterval(${gameInterval}) to stop it :D`);
@@ -50,7 +52,6 @@ function popout() {
       let randomNum = Math.round(Math.random() * (moles.length - 1));
       let mole = moles[randomNum];
       mole.classList.toggle("moleanimation");
-      console.log("speed", speed);
       let randomMoleSpeed = Math.random() * molespeed;
       mole.style.animationDuration = randomMoleSpeed + "s";
       mole.addEventListener("click", function (e) {
@@ -71,10 +72,12 @@ function popout() {
       gameInterval = 0;
       customCursor.classList.toggle("hideelement");
       if (playerRoundScore > 0) {
-        countdowntime.innerHTML = "Well played! Get Ready For The Next Round";
+        countdowntime.innerHTML =
+          "Well played! Click Start When You're Ready For The Next Round";
         nextRound();
       } else {
         countdowntime.innerHTML = "";
+        console.log("end game do you even run?");
         endGame();
       }
     }, 10000);
@@ -89,12 +92,13 @@ function endGame() {
     submitbtn.classList.toggle("hideelement");
     //addtolocalstorage(playername, round, totalscore);
   } else {
+    popout();
   }
 }
 
-submitbtn.addEventListener("click", function () {
-  // localStorage.setItem("name", JSON.stringify(nameinput.value)); // add the name but it is overrided everytime
+// add highscore to local storage
 
+submitbtn.addEventListener("click", function () {
   let highScoreArray = JSON.parse(localStorage.getItem("names"));
 
   highScoreArray.push({ name: nameinput.value, high_score: totalscore });
@@ -118,6 +122,8 @@ submitbtn.addEventListener("click", function () {
   startButton.classList.toggle("hideelement");
   nameinput.classList.toggle("hideelement");
   submitbtn.classList.toggle("hideelement");
+  scoreCounter.innerHTML = 0;
+  roundhtml.innerHTML = 0;
 });
 
 // calculating x an y positions of the cursor
@@ -148,7 +154,7 @@ document.body.addEventListener("mousedown", function () {
 function addWristFlick() {
   customCursor.classList.add("flix");
 }
-
+// 3, 2, 1, go count down
 function countdown() {
   let times = setInterval(() => {
     document.getElementById("countdownaudio").play();
@@ -173,7 +179,6 @@ function nextRound() {
   round++;
   endGame();
 }
-
 // })();
 // });
 // add the name,round, score to local storage
