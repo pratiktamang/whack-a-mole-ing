@@ -89,7 +89,7 @@ function popout() {
 
 function endGame() {
   if (totalscore > 0) {
-    countdowntime.innerHTML = "Congrats! Add You Name to the HOF!";
+    countdowntime.innerHTML = "Congrats! Add Your Name to the HOF!";
     startButton.classList.toggle("hideelement");
     nameinput.classList.toggle("hideelement");
     submitbtn.classList.toggle("hideelement");
