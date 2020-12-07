@@ -2,7 +2,7 @@
 // makes the functions, variables inaccessible in the console.
 let totalscore = 0;
 let startRoundScore = 0;
-var playerRoundScore = 1;
+let playerRoundScore = 1;
 let startButton = document.querySelector("#startbtn");
 let moles = document.querySelectorAll("#game > img.moleimage");
 let gameInterval;
@@ -12,11 +12,17 @@ let countdowntime = document.getElementById("cdown");
 let startingTime = 3;
 let roundhtml = document.getElementById("round");
 let timer = startingTime;
-var round = 1;
+let round = 1;
 let speed = 5;
 let playername = "";
 let nameinput = document.getElementById("nameinput");
 let submitbtn = document.getElementById("submitbtn");
+let tableRows = document.getElementById("tablerows");
+let hallOfHameSection = document.getElementById("HallOfFame");
+
+if (localStorage.getItem("names") === null) {
+  localStorage.setItem("names", JSON.stringify([])); // turns it into string
+}
 
 // start button starts the countdown and game
 startButton.addEventListener("click", startGame);
@@ -24,6 +30,7 @@ startButton.addEventListener("click", startGame);
 function startGame() {
   roundhtml.innerHTML = "Round:" + round;
   customCursor.classList.toggle("hideelement");
+  // hallOfHameSection.classList.toggle("hideelement");
   playerRoundScore = 0;
   countdown();
 }
@@ -85,22 +92,48 @@ function endGame() {
   }
 }
 
-function addtolocalstorage() {
-  window.localStorage.setItem("name", "playname");
-}
+submitbtn.addEventListener("click", function () {
+  // localStorage.setItem("name", JSON.stringify(nameinput.value)); // add the name but it is overrided everytime
+
+  let highScoreArray = JSON.parse(localStorage.getItem("names"));
+
+  highScoreArray.push({ name: nameinput.value, high_score: totalscore });
+  localStorage.setItem("names", JSON.stringify(highScoreArray));
+  console.log("highscorearray", highScoreArray);
+  hallOfHameSection.classList.toggle("hideelement");
+  tableRows.innerHTML = "";
+  for (let i = 0; i < highScoreArray.length; i++) {
+    let row = document.createElement("tr");
+    let nameCell = document.createElement("td");
+    let scoreCell = document.createElement("td");
+
+    nameCell.appendChild(document.createTextNode(highScoreArray[i].name));
+    scoreCell.appendChild(
+      document.createTextNode(highScoreArray[i].high_score)
+    );
+    row.appendChild(nameCell);
+    row.appendChild(scoreCell);
+    tableRows.appendChild(row);
+  }
+  startButton.classList.toggle("hideelement");
+  nameinput.classList.toggle("hideelement");
+  submitbtn.classList.toggle("hideelement");
+});
 
 // calculating x an y positions of the cursor
 document.body.addEventListener("mousemove", function (event) {
   myFunction(event);
 });
 
-// add a wrist flick on click
-document.body.addEventListener("mousedown", function () {
-  addWristFlick();
-});
-function addWristFlick() {
-  customCursor.classList.add("flix");
+function myFunction(e) {
+  let x = e.clientX;
+  let y = e.clientY;
+  // var coor = "Coordinates: (" + x + "," + y + ")";
+  customCursor.style["top"] = y - 110 + "px";
+  customCursor.style["left"] = x - 35 + "px";
 }
+
+// add a wrist flick on click
 document.body.addEventListener("mouseup", function () {
   removeWristFlick();
 });
@@ -109,12 +142,11 @@ function removeWristFlick() {
   customCursor.classList.remove("flix");
 }
 
-function myFunction(e) {
-  let x = e.clientX;
-  let y = e.clientY;
-  // var coor = "Coordinates: (" + x + "," + y + ")";
-  customCursor.style["top"] = y - 110 + "px";
-  customCursor.style["left"] = x - 35 + "px";
+document.body.addEventListener("mousedown", function () {
+  addWristFlick();
+});
+function addWristFlick() {
+  customCursor.classList.add("flix");
 }
 
 function countdown() {
@@ -141,6 +173,7 @@ function nextRound() {
   round++;
   endGame();
 }
+
 // })();
 // });
 // add the name,round, score to local storage

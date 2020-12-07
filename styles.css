@@ -33,8 +33,9 @@ span {
   background-color: #bfe1b0;
   text-align: center;
   padding: 15px 50px;
-  margin: 70px auto 100px auto;
+  margin: 70px auto 30px auto;
   font-size: 25px;
+  position: relative;
 }
 
 .gamecontainerone {
@@ -42,7 +43,7 @@ span {
   grid-template-columns: 1fr 1fr 1fr;
   margin: 10px auto;
   width: 60%;
-  row-gap: 135px;
+  row-gap: 90px;
   column-gap: -50px;
   justify-content: center;
 }
@@ -54,19 +55,19 @@ h1 {
 }
 
 .dirtimage {
-  margin: -40px 50px;
-  width: 300px;
+  margin: -20px 50px;
+  width: 250px;
   background-image: url(./colour-bg.png);
   background-size: 100% 200px;
   background-repeat: no-repeat;
   background-position: center bottom;
-  padding-bottom: 130px;
+  padding-bottom: 150px;
   position: relative;
   z-index: 1;
 }
 
 .moleimage {
-  width: 150px;
+  width: 120px;
   margin: 0 auto -300px;
   transform: translateY(130px);
   /* z-index: -1; */
@@ -128,4 +129,13 @@ h1 {
 
 #localstorageinput {
   margin: 0 auot;
+}
+
+.nameandscore {
+  display: flex;
+  flex-direction: row;
+}
+
+#HallOfFame {
+  text-align: center;
 }
