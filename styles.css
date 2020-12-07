@@ -42,7 +42,8 @@ span {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 10px auto;
-  width: 60%;
+  min-width: 150px;
+  max-width: 150px;
   row-gap: 90px;
   column-gap: -50px;
   justify-content: center;
@@ -75,7 +76,7 @@ h1 {
 
 .moleanimation {
   animation-name: popout;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
 }
 
 @keyframes popout {
@@ -115,7 +116,7 @@ h1 {
 
 .gothit {
   background-color: red;
-  animation: rotation 0.5s infinite linear;
+  animation: rotation 0.2s 1;
 }
 
 @keyframes rotation {
