@@ -1,7 +1,5 @@
-// (() => {
-// makes the functions, variables inaccessible in the console.
 let totalscore = 0;
-var playerRoundScore = 0; // why 1?
+var playerRoundScore = 0;
 let startButton = document.querySelector("#startbtn");
 let moles = document.querySelectorAll("#game > img.moleimage");
 let gameInterval;
@@ -12,19 +10,25 @@ let startingTime = 3;
 let roundhtml = document.getElementById("round");
 let timer = startingTime;
 var round = 1;
-let speed = 5;
+let speed = 4;
+let playername = "";
 let nameinput = document.getElementById("nameinput");
 let submitbtn = document.getElementById("submitbtn");
 let tableRows = document.getElementById("tablerows");
 let hallOfHameSection = document.getElementById("HallOfFame");
 let countDownVolume = document.getElementById("countdownaudio");
+let gameArea = document.getElementById("game");
 
-function quarterVolume() {
+function lowerVolume() {
   countDownVolume.volume = 0.1;
   document.getElementById("gothitaudio").volume = 0.1;
 }
 
-quarterVolume();
+lowerVolume();
+
+if (localStorage.getItem("names") === null) {
+  localStorage.setItem("names", JSON.stringify([])); // turns it into string
+}
 
 if (localStorage.getItem("names") === null) {
   localStorage.setItem("names", JSON.stringify([])); // turns it into string
@@ -34,13 +38,15 @@ if (localStorage.getItem("names") === null) {
 startButton.addEventListener("click", startGame);
 
 function startGame() {
-  roundhtml.innerHTML = "Round:" + round;
+  // startButton.innerHTML = "Start";
+  startButton.innerHTML = "Round:" + round;
+  countdowntime.innerHTML = "Good Luck!";
   customCursor.classList.toggle("hideelement");
-  // hallOfHameSection.classList.toggle("hideelement");
   countdown();
 }
 
 function popout() {
+  playerRoundScore = 0;
   molespeed = speed;
   if (gameInterval) {
     // "The game is already running",gameInterval," is the id of the setInterval"
@@ -53,59 +59,50 @@ function popout() {
       let randomNum = Math.round(Math.random() * (moles.length - 1));
       let mole = moles[randomNum];
       mole.classList.toggle("moleanimation");
+
       let randomMoleSpeed = Math.random() * molespeed;
       mole.style.animationDuration = randomMoleSpeed + "s";
+
       mole.addEventListener("click", function (e) {
         if (!mole.classList.contains("gothit")) {
           totalscore++;
           playerRoundScore++;
-          document.getElementById("gothitaudio").play();
+          playGotHit();
           scoreCounter.innerHTML = totalscore;
         }
         mole.classList.add("gothit");
       });
       setTimeout(function () {
         mole.classList.remove("gothit");
-      }, Math.round(randomMoleSpeed * 1000));
+      }, Math.round(randomMoleSpeed * 300));
     }, 1000);
     setTimeout(function () {
       clearInterval(gameInterval);
       gameInterval = 0;
+      console.log("totalscore: ", totalscore);
+      console.log("playerRoundScore: ", playerRoundScore);
       customCursor.classList.toggle("hideelement");
-      if (playerRoundScore > 0) {
-        countdowntime.innerHTML =
-          "Well played! Click Start When You're Ready For The Next Round";
-        nextRound();
-      } else {
-        countdowntime.innerHTML = "";
-        console.log("end game do you even run?");
-        endGame();
-      }
+      nextRound();
     }, 10000);
   }
 }
 
 function endGame() {
-  if (playerRoundScore === 0) {
-    console.log(playerRoundScore);
+  if (totalscore > 0) {
+    countdowntime.innerHTML = "Congrats! Add You Name to the HOF!";
     startButton.classList.toggle("hideelement");
     nameinput.classList.toggle("hideelement");
     submitbtn.classList.toggle("hideelement");
-    //addtolocalstorage(playername, round, totalscore);
-  } else {
-    popout();
+    startButton.innerHTML = "Beat Your Score";
   }
 }
 
-// add highscore to local storage
-
 submitbtn.addEventListener("click", function () {
   let highScoreArray = JSON.parse(localStorage.getItem("names"));
-
+  countdowntime.innerHTML = "";
   highScoreArray.push({ name: nameinput.value, high_score: totalscore });
   localStorage.setItem("names", JSON.stringify(highScoreArray));
   console.log("highscorearray", highScoreArray);
-  hallOfHameSection.classList.toggle("hideelement");
   tableRows.innerHTML = "";
   for (let i = 0; i < highScoreArray.length; i++) {
     let row = document.createElement("tr");
@@ -123,8 +120,11 @@ submitbtn.addEventListener("click", function () {
   startButton.classList.toggle("hideelement");
   nameinput.classList.toggle("hideelement");
   submitbtn.classList.toggle("hideelement");
+  totalscore = 0;
+  round = 1;
   scoreCounter.innerHTML = 0;
-  roundhtml.innerHTML = 0;
+  hallOfHameSection.classList.remove("hideelement");
+  hallOfHameSection.scrollIntoView();
 });
 
 // calculating x an y positions of the cursor
@@ -135,7 +135,6 @@ document.body.addEventListener("mousemove", function (event) {
 function myFunction(e) {
   let x = e.clientX;
   let y = e.clientY;
-  // var coor = "Coordinates: (" + x + "," + y + ")";
   customCursor.style["top"] = y - 110 + "px";
   customCursor.style["left"] = x - 35 + "px";
 }
@@ -155,7 +154,7 @@ document.body.addEventListener("mousedown", function () {
 function addWristFlick() {
   customCursor.classList.add("flix");
 }
-// 3, 2, 1, go count down
+
 function countdown() {
   let times = setInterval(() => {
     document.getElementById("countdownaudio").play();
@@ -175,12 +174,20 @@ function countdown() {
 // start next round or game over
 // next round is an option if roundscore > 0
 function nextRound() {
-  roundhtml.innerHTML = "Round:" + round;
-  speed--;
-  round++;
-  endGame();
+  if (playerRoundScore >= 1) {
+    startButton.innerHTML = "Start";
+    countdowntime.innerHTML =
+      "Well played! Click Start When You're Ready For The Next Round";
+    speed--;
+    round++;
+  } else if (totalscore === 0) {
+    countdowntime.innerHTML = "Seriously, didn't hit one!?";
+    startButton.innerHTML = "Retry";
+  } else if (playerRoundScore === 0 && totalscore > 1) {
+    endGame();
+  }
 }
-// })();
-// });
-// add the name,round, score to local storage
-// get that info and display it on the page.
+
+function playGotHit() {
+  document.getElementById("gothitaudio").play();
+}

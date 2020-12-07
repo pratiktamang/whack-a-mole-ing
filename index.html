@@ -14,7 +14,7 @@
             <span id ="counter">0</span>
         </div>
         <div>
-            <p id="round">Round</p>
+            <p id="round"></p>
             <button id="startbtn">Start!</button>
         <div>
         <div id="localstorageinput">
@@ -38,21 +38,25 @@
             <img class="dirtimage donotdrag" src="./dirt.svg">
             <img class="dirtimage donotdrag" src="./dirt.svg">
     </section>
-    <section id="HallOfFame">
-        <h3>Hall Of Famers</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>High Score</th>
-                </tr>
-            </thead>
-            <tbody id="tablerows">
-                <tr>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div id="HallOfFame" class="hideelement">
+        <div>
+            <h3>Hall Of Famers</h3>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>High Score</th>
+                    </tr>
+                </thead>
+                <tbody id="tablerows">
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <img id="hammerpic" class="hideelement" src="./hammer.png">
     <audio id="gothitaudio"><source src="./gothitsound.ogg" type="audio/ogg"></audio>
     <audio id="countdownaudio"><source src="./countdown.ogg" type="audio/ogg"></audio>
