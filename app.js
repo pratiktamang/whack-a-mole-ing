@@ -11,6 +11,7 @@ let countdowntime = document.getElementById("cdown");
 let startingTime = 3;
 let roundhtml = document.getElementById("round");
 let timer = startingTime;
+var round = 1;
 let speed = 5;
 let nameinput = document.getElementById("nameinput");
 let submitbtn = document.getElementById("submitbtn");
